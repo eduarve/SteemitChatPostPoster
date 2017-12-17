@@ -59,6 +59,13 @@ Public Class Form1
             driver = New RocketChatDriver(Server.Text, True)
             Await driver.ConnectAsync()
             Await driver.LoginAsync(loginOption)
+
+            If String.IsNullOrEmpty(driver.UserId) Then
+                ErrorMessage = "The username or password is invalid" & vbCrLf
+                MsgBox(ErrorMessage)
+                Return
+            End If
+
             For Each item In ListBox1.Items
                 Dim getChannelID = Await driver.GetRoomIdAsync(item)
                 Dim RoomIDResult = getChannelID.Result
